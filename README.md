@@ -6,3 +6,5 @@ Toto je muj první repozitar
 
 i made this change online
 
+
+jsem super kral
