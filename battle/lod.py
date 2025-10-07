@@ -35,6 +35,8 @@ class Lod
             if self._trup < 0:
                 self._trup = 0
                 zprava = f'{zprava[:-1]} a byla znicena.'
+        else:
+            zprava = f'lod {self._jmeno} odrazila utok stity'
 
     def nastav_zpravu(self, zprava):
         self._zprava = zprava
