@@ -4,7 +4,7 @@
 Lod a odvozene tridy pro vesmirny souboj
 '''
 
-class Lod
+class Lod:
     '''
     Zakladni tridareprezentujici lod
     '''

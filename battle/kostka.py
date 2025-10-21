@@ -10,7 +10,7 @@ class Kostka:
     def __str__(self):
         return f'Toto je kostka s {self.__pocet_sten} stenami'
 
-        defgetPocet_sten(self):
+    def getPocet_sten(self):
             return self.__pocet_sten
 def main():
     k1 = Kostka(6)
