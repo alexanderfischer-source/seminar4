@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
-from kostka import Kostka
-from lod import Lod
+from kostka import Kostka 
+from lod import Lod, Stihac, Tlustoch
 
 class Sektor:
     """
-    Sprava souboje dvou lodi
+    Správa souboje dvou lodí
     """
 
-    def __init__(self, lod_1,lod_2,kostka, jmeno='bez_nazvu'):
+    def __init__(self, lod_1, lod_2, kostka, jmeno="bez nazvu"):
         self._jmeno = jmeno
         self._lod_1 = lod_1
         self._lod_2 = lod_2
@@ -21,14 +21,17 @@ class Sektor:
             _subprocess.call(['cmd.exe', '/C', 'cls'])
         else:
             _subprocess.call(['clear'])
-
+        
     def _vypis_lod(self, lod):
-            print(lod)
-            print(f'Trup: {lod._trup}\n')
-
+        print(lod)
+        print(f'Trup: {lod.graficky_trup()}')
+        print(f'Stit: {lod._stit}\n')
+        if isinstance(lod, Stihac):
+            print(f'Energie: {lod.graficka_energie()}')
+    
     def _vykresli(self):
         self._vycisti()
-        print(f'============== SEKTOR {self._jmeno} ===============\n')
+        print(f'================ Sektor {self._jmeno} ================\n')
         print('Lodě:\n')
         self._vypis_lod(self._lod_1)
         self._vypis_lod(self._lod_2)
@@ -36,30 +39,31 @@ class Sektor:
 
 
     def souboj(self):
-        print(f"Vitej v sektoru {self._jmeno}")
-        print("====================")
-        print("Dnes se utkaji lode:")
+        print(f"Vitej v sektoru {self._jmeno}!")
+        print("======================")
+        print()
+        print(f"Dnes se utkaji lode:")
         self._vypis_lod(self._lod_1)
         self._vypis_lod(self._lod_2)
-        print("Klikni ENTER aby se zacali fackovat")
+        print("Zahajit souboj...")
         input()
 
         import random
         if random.randint(0, 1):
             self._lod_1, self._lod_2 = self._lod_2, self._lod_1
 
-
-
         while self._lod_1.je_operacni() and self._lod_2.je_operacni():
             self._lod_1.utoc(self._lod_2)
             self._vykresli()
             self._vypis_zpravu(self._lod_1.vypis_zpravu())
             self._vypis_zpravu(self._lod_2.vypis_zpravu())
+
             if self._lod_2.je_operacni():
                 self._lod_2.utoc(self._lod_1)
                 self._vykresli()
                 self._vypis_zpravu(self._lod_2.vypis_zpravu())
                 self._vypis_zpravu(self._lod_1.vypis_zpravu())
+
 
     def _vypis_zpravu(self, zprava):
         import time as _time
@@ -69,17 +73,19 @@ class Sektor:
 
 if __name__ == '__main__':
     k = Kostka(10)
-    lodicka = Lod("Millenium Falcon", 100, 80, 50, k)
-    clun = Lod("Pudlicek", 100, 80, 50, k)
-    lod = Lod("Vojta", 200, 100, 60, k)
+    lodicka = Lod("KingAlexanderTheGreat", 300, 95, 75, k)
+    clun = Lod("Pudlicek", 140, 20, 30, k)
+    l = Lod("MalejPtacek", kostka=k, trup=80, utok=60, stit=70)
+    fighter = Stihac("Wasp", 160, 50, 60, k, 30, 90)
+    tlustoch = Tlustoch("FatBoy", 185, 50, 40, k)
 
-    orion = Sektor(lod, clun, k, "orion")
-    gamma = Sektor(lodicka, lod, k, "gamma")
 
+    orion = Sektor(lodicka, fighter, k, "Orion")
+    gamma = Sektor(lodicka, l, k, "Gamma")
+    tarena = Sektor(lodicka, tlustoch, k, "Tarena")
 
     orion.souboj()
     gamma.souboj()
-
-
+    tarena. souboj()
 
 
