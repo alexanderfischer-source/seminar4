@@ -46,14 +46,13 @@ class FilterCriteria:
             to_date = split_opt(args.to_date),
             min_threat = split_opt(args.min_threat),
             max_threat = split_opt(args.max_threat),
-            min_money = split_opt(args.min_money),
+            min_money = args.min_money,
             channel_darknet_only = args.channel_darknet
         )
     
     def match(self, row: Dict[str, str]) -> bool:
         #zeme
         if self.country and row.get("country", "").upper() not in self.country:
-
             return False
 
         #status
